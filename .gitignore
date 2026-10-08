@@ -1,0 +1,12 @@
+# data must never be committed
+data/
+workspace/intermediate_csv/
+workspace/windows/
+*.pcap
+__MACOSX/
+.DS_Store
+# python
+__pycache__/
+*.pyc
+.venv/
+# derived outputs may be regenerated (keep workspace/artifacts + results if you want to ship a trained model)

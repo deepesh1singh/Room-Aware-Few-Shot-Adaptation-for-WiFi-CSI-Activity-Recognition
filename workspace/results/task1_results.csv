@@ -1,0 +1,12 @@
+experiment,target_room,K,metric,value,n_val_windows,window_length
+task1_room_id,ALL,,room_accuracy,0.9986979166666666,768.0,
+task1_room_id,A,,room_accuracy,0.9974554707379135,393.0,
+task1_room_id,B,,room_accuracy,1.0,375.0,
+task1_fingerprint_vs_length,ALL,,room_accuracy_len5,0.8658854166666666,,5.0
+task1_fingerprint_vs_length,ALL,,room_accuracy_len10,0.90625,,10.0
+task1_fingerprint_vs_length,ALL,,room_accuracy_len20,0.9192708333333334,,20.0
+task1_fingerprint_vs_length,ALL,,room_accuracy_len30,0.91796875,,30.0
+task1_fingerprint_vs_length,ALL,,room_accuracy_len50,0.9453125,,50.0
+task1_fingerprint_vs_length,ALL,,room_accuracy_len75,0.9661458333333334,,75.0
+task1_fingerprint_vs_length,ALL,,room_accuracy_len100,0.9817708333333334,,100.0
+task1_fingerprint_vs_length,ALL,,room_accuracy_len150,0.9986979166666666,,150.0

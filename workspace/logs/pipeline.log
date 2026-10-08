@@ -1,0 +1,183 @@
+15:09:04 | INFO | config=D:\9TH SEM\csi_cross_room_fewshot\configs\experiment.yaml | raw_root=D:\9TH SEM\csi_cross_room_fewshot\data\raw | work_dir=D:\9TH SEM\csi_cross_room_fewshot\workspace
+15:09:04 | INFO | === stage: ingest ===
+15:09:04 | INFO | Room A (Experiment-2) csidata : D:\9TH SEM\csi_cross_room_fewshot\data\raw\csidata
+15:09:04 | INFO | Room B (Experiment-3) Data    : D:\9TH SEM\csi_cross_room_fewshot\data\raw\Data
+15:09:04 | INFO | Room A: 1084 pcaps (934 development + 150 supplied validation) | Room B: 1201 csv captures
+15:09:04 | INFO | Created Room-B validation split (25 per activity, seed=42, backend=python_random) -> D:\9TH SEM\csi_cross_room_fewshot\workspace\manifests\room_B_validation_split.csv
+15:16:22 | INFO | Room A: 1084 captures, 12 ineligible (<150 valid rows), partial-band rows 70.7%, lowest-amplitude subcarriers [1, 118, 122, 123, 124, 125, 126, 127, 130, 133]
+15:16:22 | INFO | Room B: 1201 captures, 0 ineligible (<150 valid rows), partial-band rows 5.0%, lowest-amplitude subcarriers [124, 125, 126, 127, 128, 129, 130, 131, 132, 133]
+15:16:22 | INFO | Wrote D:\9TH SEM\csi_cross_room_fewshot\workspace\manifests\captures.csv and D:\9TH SEM\csi_cross_room_fewshot\workspace\manifests\qc_summary.json
+15:16:22 | INFO | done. Results: D:\9TH SEM\csi_cross_room_fewshot\workspace\results | Figures: D:\9TH SEM\csi_cross_room_fewshot\workspace\figures
+15:16:46 | INFO | config=D:\9TH SEM\csi_cross_room_fewshot\configs\experiment.yaml | raw_root=D:\9TH SEM\csi_cross_room_fewshot\data\raw | work_dir=D:\9TH SEM\csi_cross_room_fewshot\workspace
+15:16:46 | INFO | === stage: windows ===
+15:18:33 | INFO | Built 6334 windows {('dev', 'A'): 2338, ('dev', 'B'): 3228, ('val', 'A'): 393, ('val', 'B'): 375}; preprocessing hash 96f198bf6680
+15:18:33 | INFO | done. Results: D:\9TH SEM\csi_cross_room_fewshot\workspace\results | Figures: D:\9TH SEM\csi_cross_room_fewshot\workspace\figures
+15:23:34 | INFO | config=D:\9TH SEM\csi_cross_room_fewshot\configs\experiment.yaml | raw_root=D:\9TH SEM\csi_cross_room_fewshot\data\raw | work_dir=D:\9TH SEM\csi_cross_room_fewshot\workspace
+15:23:34 | INFO | === stage: ingest ===
+15:23:34 | INFO | manifests/captures.csv exists -> skipping ingest (use --force to redo)
+15:23:34 | INFO | === stage: windows ===
+15:23:34 | INFO | manifests/windows.csv exists -> skipping window export (use --force to redo)
+15:23:34 | INFO | === stage: ssl ===
+15:23:34 | INFO | Loading 5566 development and 768 validation windows
+15:25:19 | INFO | Fitting normaliser on 5566 DEVELOPMENT windows (both rooms pooled, no labels)
+15:25:42 | INFO | SSL pre-training: 5566 windows, 2 epochs, batch 128, device cpu
+15:25:54 | INFO | epoch   1/2  NT-Xent loss 4.6161  (chance level 5.54)
+15:26:12 | INFO | epoch   2/2  NT-Xent loss 3.9534  (chance level 5.54)
+15:26:12 | INFO | Saved D:\9TH SEM\csi_cross_room_fewshot\workspace\artifacts\encoder_ssl.pt
+15:26:12 | INFO | === stage: task1 ===
+15:26:12 | INFO | Task 1 room accuracy on 768 official 150-observation validation windows: 0.9987
+15:26:15 | INFO | === stage: task2 ===
+15:26:25 | INFO | representation ssl          dev (5566, 128)  val (768, 128)
+15:26:25 | INFO | representation random       dev (5566, 128)  val (768, 128)
+15:26:25 | INFO | representation handcrafted  dev (5566, 81)  val (768, 81)
+15:26:33 | INFO | Task 2 joint linear probe  ssl          macro-F1 0.7726
+15:26:33 | INFO | Task 2 joint linear probe  random       macro-F1 0.7603
+15:26:33 | INFO | Task 2 joint linear probe  handcrafted  macro-F1 0.8930
+15:26:36 | INFO | === stage: task3 ===
+15:26:46 | INFO | representation ssl          dev (5566, 128)  val (768, 128)
+15:26:46 | INFO | representation random       dev (5566, 128)  val (768, 128)
+15:26:46 | INFO | representation handcrafted  dev (5566, 81)  val (768, 81)
+15:26:46 | INFO | Predicted-room routing accuracy on validation windows: 0.9987
+15:26:48 | INFO | task3 rep=ssl head=logreg B->A K=1 macro-F1 {'oracle': 0.194, 'predicted': 0.194, 'none': 0.214}
+15:26:52 | INFO | task3 rep=ssl head=logreg B->A K=5 macro-F1 {'oracle': 0.26, 'predicted': 0.26, 'none': 0.265}
+15:26:56 | INFO | task3 rep=ssl head=logreg B->A K=10 macro-F1 {'oracle': 0.292, 'predicted': 0.292, 'none': 0.261}
+15:26:59 | INFO | task3 rep=ssl head=logreg B->A K=20 macro-F1 {'oracle': 0.342, 'predicted': 0.342, 'none': 0.273}
+15:26:59 | INFO | task3 rep=ssl head=proto B->A K=1 macro-F1 {'oracle': 0.229, 'predicted': 0.229, 'none': 0.183}
+15:26:59 | INFO | task3 rep=ssl head=proto B->A K=5 macro-F1 {'oracle': 0.208, 'predicted': 0.208, 'none': 0.195}
+15:26:59 | INFO | task3 rep=ssl head=proto B->A K=10 macro-F1 {'oracle': 0.252, 'predicted': 0.252, 'none': 0.235}
+15:26:59 | INFO | task3 rep=ssl head=proto B->A K=20 macro-F1 {'oracle': 0.295, 'predicted': 0.295, 'none': 0.258}
+15:27:01 | INFO | task3 rep=ssl head=logreg A->B K=1 macro-F1 {'oracle': 0.211, 'predicted': 0.211, 'none': 0.233}
+15:27:03 | INFO | task3 rep=ssl head=logreg A->B K=5 macro-F1 {'oracle': 0.271, 'predicted': 0.271, 'none': 0.266}
+15:27:06 | INFO | task3 rep=ssl head=logreg A->B K=10 macro-F1 {'oracle': 0.325, 'predicted': 0.325, 'none': 0.264}
+15:27:08 | INFO | task3 rep=ssl head=logreg A->B K=20 macro-F1 {'oracle': 0.37, 'predicted': 0.37, 'none': 0.243}
+15:27:08 | INFO | task3 rep=ssl head=proto A->B K=1 macro-F1 {'oracle': 0.29, 'predicted': 0.29, 'none': 0.253}
+15:27:08 | INFO | task3 rep=ssl head=proto A->B K=5 macro-F1 {'oracle': 0.321, 'predicted': 0.321, 'none': 0.222}
+15:27:08 | INFO | task3 rep=ssl head=proto A->B K=10 macro-F1 {'oracle': 0.287, 'predicted': 0.287, 'none': 0.234}
+15:27:08 | INFO | task3 rep=ssl head=proto A->B K=20 macro-F1 {'oracle': 0.287, 'predicted': 0.287, 'none': 0.253}
+15:27:09 | INFO | task3 rep=random head=logreg B->A K=1 macro-F1 {'oracle': 0.166}
+15:27:09 | INFO | task3 rep=random head=logreg B->A K=5 macro-F1 {'oracle': 0.252}
+15:27:10 | INFO | task3 rep=random head=logreg B->A K=10 macro-F1 {'oracle': 0.31}
+15:27:12 | INFO | task3 rep=random head=logreg B->A K=20 macro-F1 {'oracle': 0.362}
+15:27:12 | INFO | task3 rep=random head=proto B->A K=1 macro-F1 {'oracle': 0.218}
+15:27:12 | INFO | task3 rep=random head=proto B->A K=5 macro-F1 {'oracle': 0.238}
+15:27:12 | INFO | task3 rep=random head=proto B->A K=10 macro-F1 {'oracle': 0.287}
+15:27:12 | INFO | task3 rep=random head=proto B->A K=20 macro-F1 {'oracle': 0.329}
+15:27:13 | INFO | task3 rep=random head=logreg A->B K=1 macro-F1 {'oracle': 0.245}
+15:27:14 | INFO | task3 rep=random head=logreg A->B K=5 macro-F1 {'oracle': 0.345}
+15:27:15 | INFO | task3 rep=random head=logreg A->B K=10 macro-F1 {'oracle': 0.392}
+15:27:16 | INFO | task3 rep=random head=logreg A->B K=20 macro-F1 {'oracle': 0.36}
+15:27:16 | INFO | task3 rep=random head=proto A->B K=1 macro-F1 {'oracle': 0.246}
+15:27:16 | INFO | task3 rep=random head=proto A->B K=5 macro-F1 {'oracle': 0.288}
+15:27:16 | INFO | task3 rep=random head=proto A->B K=10 macro-F1 {'oracle': 0.333}
+15:27:16 | INFO | task3 rep=random head=proto A->B K=20 macro-F1 {'oracle': 0.325}
+15:27:16 | INFO | task3 rep=handcrafted head=logreg B->A K=1 macro-F1 {'oracle': 0.223}
+15:27:16 | INFO | task3 rep=handcrafted head=logreg B->A K=5 macro-F1 {'oracle': 0.279}
+15:27:16 | INFO | task3 rep=handcrafted head=logreg B->A K=10 macro-F1 {'oracle': 0.322}
+15:27:17 | INFO | task3 rep=handcrafted head=logreg B->A K=20 macro-F1 {'oracle': 0.362}
+15:27:17 | INFO | task3 rep=handcrafted head=proto B->A K=1 macro-F1 {'oracle': 0.218}
+15:27:17 | INFO | task3 rep=handcrafted head=proto B->A K=5 macro-F1 {'oracle': 0.227}
+15:27:17 | INFO | task3 rep=handcrafted head=proto B->A K=10 macro-F1 {'oracle': 0.257}
+15:27:17 | INFO | task3 rep=handcrafted head=proto B->A K=20 macro-F1 {'oracle': 0.28}
+15:27:17 | INFO | task3 rep=handcrafted head=logreg A->B K=1 macro-F1 {'oracle': 0.228}
+15:27:17 | INFO | task3 rep=handcrafted head=logreg A->B K=5 macro-F1 {'oracle': 0.42}
+15:27:17 | INFO | task3 rep=handcrafted head=logreg A->B K=10 macro-F1 {'oracle': 0.472}
+15:27:18 | INFO | task3 rep=handcrafted head=logreg A->B K=20 macro-F1 {'oracle': 0.5}
+15:27:18 | INFO | task3 rep=handcrafted head=proto A->B K=1 macro-F1 {'oracle': 0.224}
+15:27:18 | INFO | task3 rep=handcrafted head=proto A->B K=5 macro-F1 {'oracle': 0.28}
+15:27:18 | INFO | task3 rep=handcrafted head=proto A->B K=10 macro-F1 {'oracle': 0.255}
+15:27:18 | INFO | task3 rep=handcrafted head=proto A->B K=20 macro-F1 {'oracle': 0.251}
+15:27:20 | INFO | Saved bidirectional episode models (K=20, seed=0, head=logreg) -> episode_models.joblib
+15:27:20 | INFO | End-to-end routed system (K=20) on all validation windows: macro-F1 0.4431
+15:27:21 | INFO | done. Results: D:\9TH SEM\csi_cross_room_fewshot\workspace\results | Figures: D:\9TH SEM\csi_cross_room_fewshot\workspace\figures
+15:31:55 | INFO | config=D:\9TH SEM\csi_cross_room_fewshot\configs\experiment.yaml | raw_root=D:\9TH SEM\csi_cross_room_fewshot\data\raw | work_dir=D:\9TH SEM\csi_cross_room_fewshot\workspace
+15:31:55 | INFO | === stage: ssl ===
+15:31:55 | INFO | Loading 5566 development and 768 validation windows
+15:32:25 | INFO | SSL pre-training: 5566 windows, 60 epochs, batch 128, device cpu
+15:32:40 | INFO | epoch   1/60  NT-Xent loss 4.6225  (chance level 5.54)
+15:34:07 | INFO | epoch   5/60  NT-Xent loss 3.1402  (chance level 5.54)
+15:36:00 | INFO | epoch  10/60  NT-Xent loss 2.5152  (chance level 5.54)
+15:38:23 | INFO | epoch  15/60  NT-Xent loss 2.2672  (chance level 5.54)
+15:40:48 | INFO | epoch  20/60  NT-Xent loss 2.1174  (chance level 5.54)
+15:43:14 | INFO | epoch  25/60  NT-Xent loss 2.0011  (chance level 5.54)
+15:45:13 | INFO | epoch  30/60  NT-Xent loss 1.9431  (chance level 5.54)
+15:47:16 | INFO | epoch  35/60  NT-Xent loss 1.8868  (chance level 5.54)
+15:49:37 | INFO | epoch  40/60  NT-Xent loss 1.8201  (chance level 5.54)
+15:51:43 | INFO | epoch  45/60  NT-Xent loss 1.7978  (chance level 5.54)
+15:53:31 | INFO | epoch  50/60  NT-Xent loss 1.7386  (chance level 5.54)
+15:55:21 | INFO | epoch  55/60  NT-Xent loss 1.7523  (chance level 5.54)
+15:57:33 | INFO | epoch  60/60  NT-Xent loss 1.7370  (chance level 5.54)
+15:57:33 | INFO | Saved D:\9TH SEM\csi_cross_room_fewshot\workspace\artifacts\encoder_ssl.pt
+15:57:33 | INFO | done. Results: D:\9TH SEM\csi_cross_room_fewshot\workspace\results | Figures: D:\9TH SEM\csi_cross_room_fewshot\workspace\figures
+16:07:32 | INFO | config=D:\9TH SEM\csi_cross_room_fewshot\configs\experiment.yaml | raw_root=D:\9TH SEM\csi_cross_room_fewshot\data\raw | work_dir=D:\9TH SEM\csi_cross_room_fewshot\workspace
+16:07:32 | INFO | === stage: ingest ===
+16:07:32 | INFO | manifests/captures.csv exists -> skipping ingest (use --force to redo)
+16:07:32 | INFO | === stage: windows ===
+16:07:32 | INFO | manifests/windows.csv exists -> skipping window export (use --force to redo)
+16:07:32 | INFO | === stage: ssl ===
+16:07:32 | INFO | encoder_ssl.pt exists -> skipping SSL pre-training (use --force to retrain)
+16:07:32 | INFO | === stage: task1 ===
+16:07:32 | INFO | Loading 5566 development and 768 validation windows
+16:07:48 | INFO | Task 1 room accuracy on 768 official 150-observation validation windows: 0.9987
+16:07:51 | INFO | === stage: task2 ===
+16:08:05 | INFO | representation ssl          dev (5566, 128)  val (768, 128)
+16:08:05 | INFO | representation random       dev (5566, 128)  val (768, 128)
+16:08:05 | INFO | representation handcrafted  dev (5566, 81)  val (768, 81)
+16:08:13 | INFO | Task 2 joint linear probe  ssl          macro-F1 0.8414
+16:08:13 | INFO | Task 2 joint linear probe  random       macro-F1 0.7603
+16:08:13 | INFO | Task 2 joint linear probe  handcrafted  macro-F1 0.8930
+16:08:16 | INFO | === stage: task3 ===
+16:08:29 | INFO | representation ssl          dev (5566, 128)  val (768, 128)
+16:08:29 | INFO | representation random       dev (5566, 128)  val (768, 128)
+16:08:29 | INFO | representation handcrafted  dev (5566, 81)  val (768, 81)
+16:08:29 | INFO | Predicted-room routing accuracy on validation windows: 0.9987
+16:08:35 | INFO | task3 rep=ssl head=logreg B->A K=1 macro-F1 {'oracle': 0.204, 'predicted': 0.204, 'none': 0.139}
+16:08:50 | INFO | task3 rep=ssl head=logreg B->A K=5 macro-F1 {'oracle': 0.276, 'predicted': 0.276, 'none': 0.198}
+16:09:00 | INFO | task3 rep=ssl head=logreg B->A K=10 macro-F1 {'oracle': 0.301, 'predicted': 0.301, 'none': 0.236}
+16:09:06 | INFO | task3 rep=ssl head=logreg B->A K=20 macro-F1 {'oracle': 0.316, 'predicted': 0.316, 'none': 0.26}
+16:09:06 | INFO | task3 rep=ssl head=proto B->A K=1 macro-F1 {'oracle': 0.189, 'predicted': 0.186, 'none': 0.137}
+16:09:06 | INFO | task3 rep=ssl head=proto B->A K=5 macro-F1 {'oracle': 0.223, 'predicted': 0.221, 'none': 0.151}
+16:09:06 | INFO | task3 rep=ssl head=proto B->A K=10 macro-F1 {'oracle': 0.23, 'predicted': 0.228, 'none': 0.167}
+16:09:06 | INFO | task3 rep=ssl head=proto B->A K=20 macro-F1 {'oracle': 0.236, 'predicted': 0.232, 'none': 0.16}
+16:09:11 | INFO | task3 rep=ssl head=logreg A->B K=1 macro-F1 {'oracle': 0.25, 'predicted': 0.25, 'none': 0.216}
+16:09:15 | INFO | task3 rep=ssl head=logreg A->B K=5 macro-F1 {'oracle': 0.304, 'predicted': 0.304, 'none': 0.266}
+16:09:19 | INFO | task3 rep=ssl head=logreg A->B K=10 macro-F1 {'oracle': 0.322, 'predicted': 0.322, 'none': 0.258}
+16:09:24 | INFO | task3 rep=ssl head=logreg A->B K=20 macro-F1 {'oracle': 0.323, 'predicted': 0.323, 'none': 0.252}
+16:09:24 | INFO | task3 rep=ssl head=proto A->B K=1 macro-F1 {'oracle': 0.328, 'predicted': 0.328, 'none': 0.156}
+16:09:24 | INFO | task3 rep=ssl head=proto A->B K=5 macro-F1 {'oracle': 0.398, 'predicted': 0.398, 'none': 0.235}
+16:09:24 | INFO | task3 rep=ssl head=proto A->B K=10 macro-F1 {'oracle': 0.406, 'predicted': 0.406, 'none': 0.234}
+16:09:24 | INFO | task3 rep=ssl head=proto A->B K=20 macro-F1 {'oracle': 0.412, 'predicted': 0.412, 'none': 0.228}
+16:09:27 | INFO | task3 rep=random head=logreg B->A K=1 macro-F1 {'oracle': 0.201}
+16:09:28 | INFO | task3 rep=random head=logreg B->A K=5 macro-F1 {'oracle': 0.318}
+16:09:30 | INFO | task3 rep=random head=logreg B->A K=10 macro-F1 {'oracle': 0.347}
+16:09:32 | INFO | task3 rep=random head=logreg B->A K=20 macro-F1 {'oracle': 0.374}
+16:09:32 | INFO | task3 rep=random head=proto B->A K=1 macro-F1 {'oracle': 0.228}
+16:09:32 | INFO | task3 rep=random head=proto B->A K=5 macro-F1 {'oracle': 0.283}
+16:09:32 | INFO | task3 rep=random head=proto B->A K=10 macro-F1 {'oracle': 0.339}
+16:09:32 | INFO | task3 rep=random head=proto B->A K=20 macro-F1 {'oracle': 0.336}
+16:09:34 | INFO | task3 rep=random head=logreg A->B K=1 macro-F1 {'oracle': 0.225}
+16:09:35 | INFO | task3 rep=random head=logreg A->B K=5 macro-F1 {'oracle': 0.328}
+16:09:36 | INFO | task3 rep=random head=logreg A->B K=10 macro-F1 {'oracle': 0.359}
+16:09:38 | INFO | task3 rep=random head=logreg A->B K=20 macro-F1 {'oracle': 0.372}
+16:09:38 | INFO | task3 rep=random head=proto A->B K=1 macro-F1 {'oracle': 0.232}
+16:09:38 | INFO | task3 rep=random head=proto A->B K=5 macro-F1 {'oracle': 0.313}
+16:09:38 | INFO | task3 rep=random head=proto A->B K=10 macro-F1 {'oracle': 0.332}
+16:09:38 | INFO | task3 rep=random head=proto A->B K=20 macro-F1 {'oracle': 0.332}
+16:09:39 | INFO | task3 rep=handcrafted head=logreg B->A K=1 macro-F1 {'oracle': 0.227}
+16:09:39 | INFO | task3 rep=handcrafted head=logreg B->A K=5 macro-F1 {'oracle': 0.339}
+16:09:40 | INFO | task3 rep=handcrafted head=logreg B->A K=10 macro-F1 {'oracle': 0.358}
+16:09:41 | INFO | task3 rep=handcrafted head=logreg B->A K=20 macro-F1 {'oracle': 0.373}
+16:09:41 | INFO | task3 rep=handcrafted head=proto B->A K=1 macro-F1 {'oracle': 0.197}
+16:09:41 | INFO | task3 rep=handcrafted head=proto B->A K=5 macro-F1 {'oracle': 0.248}
+16:09:41 | INFO | task3 rep=handcrafted head=proto B->A K=10 macro-F1 {'oracle': 0.288}
+16:09:41 | INFO | task3 rep=handcrafted head=proto B->A K=20 macro-F1 {'oracle': 0.288}
+16:09:42 | INFO | task3 rep=handcrafted head=logreg A->B K=1 macro-F1 {'oracle': 0.202}
+16:09:43 | INFO | task3 rep=handcrafted head=logreg A->B K=5 macro-F1 {'oracle': 0.389}
+16:09:44 | INFO | task3 rep=handcrafted head=logreg A->B K=10 macro-F1 {'oracle': 0.417}
+16:09:45 | INFO | task3 rep=handcrafted head=logreg A->B K=20 macro-F1 {'oracle': 0.457}
+16:09:45 | INFO | task3 rep=handcrafted head=proto A->B K=1 macro-F1 {'oracle': 0.199}
+16:09:45 | INFO | task3 rep=handcrafted head=proto A->B K=5 macro-F1 {'oracle': 0.273}
+16:09:45 | INFO | task3 rep=handcrafted head=proto A->B K=10 macro-F1 {'oracle': 0.276}
+16:09:45 | INFO | task3 rep=handcrafted head=proto A->B K=20 macro-F1 {'oracle': 0.278}
+16:09:46 | INFO | Saved bidirectional episode models (K=20, seed=0, head=logreg) -> episode_models.joblib
+16:09:46 | INFO | End-to-end routed system (K=20) on all validation windows: macro-F1 0.4144
+16:09:48 | INFO | done. Results: D:\9TH SEM\csi_cross_room_fewshot\workspace\results | Figures: D:\9TH SEM\csi_cross_room_fewshot\workspace\figures

@@ -1,0 +1,40 @@
+{
+  "hash": "96f198bf6680",
+  "config": {
+    "data": {
+      "n_subcarriers": 256,
+      "window_length": 150,
+      "window_stride": 35,
+      "max_windows_per_capture": 3
+    },
+    "room_a": {
+      "udp_port": 5500,
+      "nexmon_header_bytes": 18,
+      "expected_magic": 4369,
+      "nfft": 256,
+      "nman": 12,
+      "nexp": 6,
+      "nbits": 10,
+      "apply_fftshift": false
+    },
+    "room_b": {
+      "apply_fftshift": false
+    },
+    "qc": {
+      "min_row_peak": 1.0,
+      "drop_duplicates": true,
+      "partial_band_tau": 0.05
+    },
+    "validation_split": {
+      "per_activity": 25,
+      "seed": 42,
+      "rng_backend": "python_random",
+      "reseed_per_activity": true
+    },
+    "normalization": {
+      "repair_partial_band_rows": true,
+      "clip": 8.0,
+      "std_floor": 0.1
+    }
+  }
+}

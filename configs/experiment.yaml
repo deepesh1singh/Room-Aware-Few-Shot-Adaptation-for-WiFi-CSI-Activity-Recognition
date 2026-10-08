@@ -1,0 +1,98 @@
+# =====================================================================================================
+# CS60055 Hackathon Challenge 2 - Cross-Room Few-Shot Adaptation : pipeline configuration
+# Every value that influences preprocessing is hashed into the provenance trail (manifests/windows.csv).
+# NOTE: floats must contain a '.' (YAML 1.1), e.g. 0.001 or 1.0e-3 - not 1e-3.
+# =====================================================================================================
+seed: 42
+device: auto            # auto | cpu | cuda
+
+paths:
+  raw_root: data/raw    # where you unzipped 1.zip (Experiment-2 / Experiment-3 are auto-discovered at any depth)
+  work_dir: workspace   # ALL derived files go here (intermediate CSVs, windows, artifacts, results, figures)
+
+data:
+  n_subcarriers: 256
+  window_length: 150           # official model input: (150, 256)
+  window_stride: 35            # windows start at row 0, 35, 70, ... of the cleaned observation sequence
+  max_windows_per_capture: 3   # earliest windows only; windows never cross captures
+
+room_a:                        # Experiment-2: Nexmon BCM4366c0, 80 MHz, 256-point CSI
+  udp_port: 5500
+  nexmon_header_bytes: 18
+  expected_magic: 0x1111
+  nfft: 256
+  nman: 12                     # mantissa bits of the packed-float CSI word
+  nexp: 6                      # exponent bits
+  nbits: 10                    # auto-scale target bit
+  apply_fftshift: false        # both rooms are already in the same centred order (checked in qc_summary.json)
+
+room_b:                        # Experiment-3: already amplitude CSV (256 columns)
+  apply_fftshift: false
+
+qc:
+  min_row_peak: 1.0            # rows whose largest amplitude is below this carry no information
+  drop_duplicates: true
+  partial_band_tau: 0.05       # min/max sub-band median ratio below which a row is a 20/40 MHz (partial-band) frame
+
+validation_split:              # Room B only (Room A uses the supplied validation/ folders)
+  per_activity: 25
+  seed: 42
+  rng_backend: python_random   # python_random | numpy_randomstate | numpy_generator
+  reseed_per_activity: true
+
+normalization:                 # fitted on DEVELOPMENT windows only
+  repair_partial_band_rows: true
+  clip: 8.0
+  std_floor: 0.1
+
+encoder:
+  widths: [128, 128, 192, 256]
+  kernels: [9, 7, 5, 3]
+  strides: [2, 2, 2, 1]
+  embed_dim: 128
+
+ssl:                           # contrastive pre-training on development windows of BOTH rooms, no labels
+  epochs: 60
+  batch_size: 128
+  lr: 0.001
+  weight_decay: 0.0001
+  temperature: 0.2
+  crop_len: 120
+  augment:
+    static_removal_prob: 0.5
+    offset_std: 0.3
+    tilt_std: 0.3
+    band_mask_prob: 0.6
+    band_mask_min: 8
+    band_mask_max: 48
+    time_mask_prob: 0.5
+    time_mask_max: 24
+    noise_std: 0.05
+
+task1:                         # recorded-environment fingerprint
+  features: mean               # mean | mean_std  (temporal statistics of the normalised window)
+  C: 1.0
+  window_lengths: [5, 10, 20, 30, 50, 75, 100, 150]
+
+task2:
+  probe_C: 1.0
+  embedding_method: auto       # auto (UMAP if installed, else t-SNE) | umap | tsne
+  embedding_plot_max_points: 2000
+
+task3:
+  ks: [1, 5, 10, 20]
+  seeds: [0, 1, 2, 3, 4]       # independent random draws of the K support captures (results = mean, bars = std)
+  heads: [logreg, proto]
+  logreg_C: 0.5
+  logreg_max_iter: 2000
+  balance_power: 1.0
+  proto_temperature: 10.0
+  routing_reps: [ssl]          # representations evaluated with predicted / oracle / no routing
+  primary: {rep: ssl, head: logreg, variant: predicted}
+  confusion_k: 5
+
+episode:                       # deployable system used by run_episode.py (and for predictions_validation.csv)
+  k: 20
+  seed: 0
+  head: logreg
+  max_windows_per_capture: 3

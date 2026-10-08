@@ -1,0 +1,85 @@
+{
+  "window_length": 150,
+  "rooms": {
+    "A": {
+      "captures": 1084,
+      "captures_by_split": {
+        "dev": 934,
+        "val": 150
+      },
+      "eligible_captures_by_split": {
+        "dev": 925,
+        "val": 147
+      },
+      "ineligible_captures": 12,
+      "qc_totals": {
+        "rej_not_csi_packet": 0,
+        "rej_bad_length": 0,
+        "rej_bad_magic": 0,
+        "rej_other_stream": 0,
+        "rej_bad_width": 0,
+        "rej_nonfinite": 0,
+        "rej_negative": 0,
+        "rej_zero_information": 0,
+        "rej_duplicate": 0,
+        "n_raw_rows": 234019,
+        "n_valid": 234019,
+        "n_partial_band": 165375
+      },
+      "partial_band_fraction": 0.7066733897674975,
+      "median_valid_observations": 221.0,
+      "lowest_amplitude_subcarriers": [
+        1,
+        118,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        130,
+        133
+      ]
+    },
+    "B": {
+      "captures": 1201,
+      "captures_by_split": {
+        "dev": 1076,
+        "val": 125
+      },
+      "eligible_captures_by_split": {
+        "dev": 1076,
+        "val": 125
+      },
+      "ineligible_captures": 0,
+      "qc_totals": {
+        "rej_not_csi_packet": 0,
+        "rej_bad_length": 0,
+        "rej_bad_magic": 0,
+        "rej_other_stream": 0,
+        "rej_bad_width": 0,
+        "rej_nonfinite": 0,
+        "rej_negative": 0,
+        "rej_zero_information": 0,
+        "rej_duplicate": 0,
+        "n_raw_rows": 600500,
+        "n_valid": 600500,
+        "n_partial_band": 29743
+      },
+      "partial_band_fraction": 0.04953039134054954,
+      "median_valid_observations": 500.0,
+      "lowest_amplitude_subcarriers": [
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133
+      ]
+    }
+  }
+}

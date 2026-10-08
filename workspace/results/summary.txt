@@ -1,0 +1,39 @@
+VALIDATION RESULTS (fixed validation windows; development data only used for fitting)
+
+== Task 1: room identification accuracy (official 150-observation windows) ==
+target_room        metric  value
+        ALL room_accuracy 0.9987
+          A room_accuracy 0.9975
+          B room_accuracy 1.0000
+
+== Task 2: frozen representation, joint linear probe (both rooms) ==
+metric          accuracy  balanced_accuracy  macro_f1
+representation                                       
+handcrafted       0.8958             0.8991    0.8930
+random            0.7422             0.7832    0.7603
+ssl               0.8503             0.8558    0.8414
+
+== Task 3: few-label cross-room adaptation (mean over support draws) ==
+metric                                      exclusive_macro_f1                      macro_f1                     
+K                                                         1.0    5.0    10.0   20.0     1.0    5.0    10.0   20.0
+experiment                      target_room                                                                      
+task3_handcrafted_logreg_oracle A                        0.359  0.587  0.643  0.665    0.227  0.339  0.358  0.373
+                                B                        0.284  0.615  0.686  0.742    0.202  0.389  0.417  0.457
+task3_handcrafted_proto_oracle  A                        0.374  0.477  0.555  0.560    0.197  0.248  0.288  0.288
+                                B                        0.343  0.527  0.529  0.533    0.199  0.273  0.276  0.278
+task3_random_logreg_oracle      A                        0.337  0.558  0.637  0.690    0.201  0.318  0.347  0.374
+                                B                        0.234  0.465  0.525  0.572    0.225  0.328  0.359  0.372
+task3_random_proto_oracle       A                        0.362  0.433  0.526  0.505    0.228  0.283  0.339  0.336
+                                B                        0.343  0.524  0.558  0.554    0.232  0.313  0.332  0.332
+task3_ssl_logreg_none           A                        0.276  0.396  0.472  0.520    0.139  0.198  0.236  0.260
+                                B                        0.335  0.544  0.564  0.566    0.216  0.266  0.258  0.252
+task3_ssl_logreg_oracle         A                        0.257  0.457  0.522  0.584    0.204  0.276  0.301  0.316
+                                B                        0.388  0.607  0.676  0.706    0.250  0.304  0.322  0.323
+task3_ssl_logreg_predicted      A                        0.257  0.457  0.522  0.584    0.204  0.276  0.301  0.316
+                                B                        0.388  0.607  0.676  0.706    0.250  0.304  0.322  0.323
+task3_ssl_proto_none            A                        0.273  0.302  0.333  0.321    0.137  0.151  0.167  0.160
+                                B                        0.349  0.531  0.532  0.549    0.156  0.235  0.234  0.228
+task3_ssl_proto_oracle          A                        0.255  0.305  0.321  0.343    0.189  0.223  0.230  0.236
+                                B                        0.400  0.504  0.544  0.558    0.328  0.398  0.406  0.412
+task3_ssl_proto_predicted       A                        0.255  0.305  0.321  0.343    0.186  0.221  0.228  0.232
+                                B                        0.400  0.504  0.544  0.558    0.328  0.398  0.406  0.412
