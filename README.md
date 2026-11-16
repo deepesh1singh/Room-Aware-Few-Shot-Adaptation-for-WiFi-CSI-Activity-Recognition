@@ -8,7 +8,7 @@ an episode runner.
 ```
  Exp-2 .pcap ──► UDP payloads ► Nexmon header check ► packed-float CSI decode ► |CSI| ┐
                                                                                        ├► QC ► intermediate_csv/ (256 cols/capture)
- Exp-3 .csv  ──► header/width check ───────────────────────────────────────────────────┘        │
+ Exp-3 .csv  ──► header/width check —───────────────────────────────────────────────────┘        │
                                                                                                 ▼
                  windows (150×256, window_XXXXX.npy + manifests/windows.csv provenance) ◄── capture-level dev/val split
                                    │ development-fitted normaliser
